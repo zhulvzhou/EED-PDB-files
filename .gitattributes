@@ -1,0 +1,4 @@
+SMD[[:space:]]Initial[[:space:]]Conformation filter=lfs diff=lfs merge=lfs -text
+MD[[:space:]]Initial[[:space:]]Conformation filter=lfs diff=lfs merge=lfs -text
+Pull[[:space:]]result filter=lfs diff=lfs merge=lfs -text
+RMSD[[:space:]]result filter=lfs diff=lfs merge=lfs -text
