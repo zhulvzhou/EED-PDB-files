@@ -1,0 +1,121 @@
+title		= CNT66 MD simulation
+;define                   = -DPOSRES
+; Run parameters
+integrator               = md     ; leap-frog integrator
+dt                       = 0.001  ; 1 fs
+nsteps                   = 200000 ; 1 * 200000 = 200 ps
+
+; For exact run continuation or redoing part of a run
+init-step                = 0
+; Part index is updated automatically on checkpointing (keeps files separate)
+simulation-part          = 1
+; mode for center of mass motion removal
+comm-mode                = Linear
+comm-grps         = System 
+; LANGEVIN DYNAMICS OPTIONS
+; Friction coefficient (amu/ps) and random seed
+bd-fric                  = 0
+ld-seed                  = -1
+
+; Output control
+nstxout                  = 5000  ; save coordinates every 10.0 ps
+nstvout                  = 5000  ; save velocities every 10.0 ps
+nstfout                  = 5000  ; save forces every 10.0 ps 
+; Output frequency for energies to log file and energy file
+nstlog                   = 5000  ; update log file every 10.0 ps
+nstenergy                = 5000  ;  save energies every 10.0 ps
+; Output frequency and precision for .xtc file
+nstxout-compressed       = 0
+compressed-x-precision   = 1000
+; This selects the subset of atoms for the compressed
+; trajectory file. You can select multiple groups. By
+; default, all atoms will be written.
+compressed-x-grps        = 
+; Selection of energy groups
+;energygrps               =  INP PRO 
+
+;  Neighborsearching
+; cut-off scheme (Verlet: particle based cut-offs, group: using charge groups)
+cutoff-scheme            = Verlet
+; nblist update frequency
+nstlist                  = 10
+; ns algorithm (simple or grid)
+ns_type                  = grid
+
+; Periodic boundary conditions: xyz, no, xy
+pbc                      = xyz
+periodic-molecules       = no
+
+; Allowed energy error due to the Verlet buffer in kJ/mol/ps per atom,
+; a value of -1 means: use rlist
+verlet-buffer-tolerance  = 0.005
+; nblist cut-off        
+rlist                    = 1.2
+; long-range cut-off for switched potentials
+rlistlong                = -1
+nstcalclr                = -1
+
+; OPTIONS FOR ELECTROSTATICS AND VDW
+; Method for doing electrostatics
+coulombtype              = PME
+;coulomb-modifier         = Potential-shift-Verlet
+rcoulomb-switch          = 0
+rcoulomb                 = 1.2
+; Relative dielectric constant for the medium and the reaction field
+epsilon-r                = 1
+epsilon-rf               = 0
+; Method for doing Van der Waals
+vdwtype                  = Cut-off
+;vdw-modifier             = Potential-shift-Verlet
+; cut-off lengths       
+rvdw-switch              = 0
+rvdw                     = 1.2
+
+; EWALD/PME/PPPM parameters
+pme-order                = 4
+fourierspacing	       = 0.16		; grid spacing for FFT
+ewald-rtol               = 1e-05
+ewald-rtol-lj            = 0.001
+lj-pme-comb-rule         = Geometric
+ewald-geometry           = 3d
+epsilon-surface          = 0
+
+; Temperature coupling  
+Tcoupl                   = V-rescale	 ; modified Berendsen thermostat
+nsttcouple               = -1
+nh-chain-length          = 10
+print-nose-hoover-chain-variables = no
+; Groups to couple separately
+tc-grps                  = System 
+; Time constant (ps) and reference temperature (K)
+tau_t		    = 0.1	 	       
+ref_t		    = 310 	  	       
+
+; Pressure coupling     
+Pcoupl                   = no
+pcoupltype               = Isotropic   ; uniform scaling of box 
+nstpcouple               = -1
+; Time constant (ps), compressibility (1/bar) and reference P (bar)
+tau-p                    = 2.0
+compressibility          = 4.5e-5  ; isothermal compressibility of water 
+ref-p                    = 1.0
+; Scaling of reference coordinates, No, All or COM
+refcoord-scaling         = com
+
+; GENERATE VELOCITIES FOR STARTUP RUN
+gen_vel                  = no
+gen-temp                 = 323
+gen-seed                 = -1
+
+; SIMULATED ANNEALING  ^M
+; Type of annealing for each temperature group (no/single/periodic)^M
+;annealing                = single
+; Number of time points to use for specifying annealing in each group^M
+;annealing_npoints        = 2
+; List of times at the annealing points for each group^M
+;annealing_time           = 0 10000
+; Temp. at each annealing point, for each group.^M
+;annealing_temp           = 200 300
+
+;freezegrps               = COF
+;freezedim                = Y Y Y 
